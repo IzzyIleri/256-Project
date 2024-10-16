@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Fictional Store - Sign Up</title>
+    <!-- Link to Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS if needed -->
+    <style>
+        /*CSS*/
+        body {
+            background-color: lightblue;
+            font-family: Arial, sans-serif;
+        }
+        .form-container {
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="text-center text-danger">Welcome to My Fictional Store</h1>
+    <p class="text-center">We sell awesome things here!</p>
+    <p class="text-center text-success">Our products are the best in town.</p>
+
+    <!-- Sign Up Form -->
+    <div class="container">
+        <div class="form-container">
+            <h2 class="text-center">Sign Up</h2>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter your full name">
+                    <div id="nameError" class="error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                    <div id="emailError" class="error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password">
+                    <div id="passwordError" class="error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirm-password" placeholder="Confirm your password">
+                    <div id="confirmPasswordError" class="error"></div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript for Form Validation and JSON Creation -->
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevent form submission
+
+            let valid = true;
+
+            // Clear previous error
+            document.getElementById('nameError').textContent = '';
+            document.getElementById('emailError').textContent = '';
+            document.getElementById('passwordError').textContent = '';
+            document.getElementById('confirmPasswordError').textContent = '';
+
+            // Full Name
+            const name = document.getElementById('name').value;
+            if (name === '') {
+                document.getElementById('nameError').textContent = 'Full Name is required';
+                valid = false;
+            }
+
+            // Email
+            const email = document.getElementById('email').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById('emailError').textContent = 'Please enter a valid email';
+                valid = false;
+            }
+
+            // Password
+            const password = document.getElementById('password').value;
+            if (password.length < 6) {
+                document.getElementById('passwordError').textContent = 'Password must be at least 6 characters';
+                valid = false;
+            }
+
+            // Confirm Password
+            const confirmPassword = document.getElementById('confirm-password').value;
+            if (password !== confirmPassword) {
+                document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
+                valid = false;
+            }
+
+            if (valid) {
+                // Create JSON
+                const userData = {
+                    fullName: name,
+                    email: email,
+                    password: password,
+                    confirmPassword: confirmPassword
+                };
+
+                // Output JSON object
+                console.log(JSON.stringify(userData));
+
+                // Display JSON the UI
+                alert('Form submitted successfully!\n' + JSON.stringify(userData, null, 2));
+            }
+        });
+    </script>
+
+    <!-- Link to Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
